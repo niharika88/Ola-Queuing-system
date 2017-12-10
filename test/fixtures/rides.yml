@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  pickup_time: 2017-12-10 15:48:02
+  driver: one
+  customer: one
+
+two:
+  status: MyString
+  pickup_time: 2017-12-10 15:48:02
+  driver: two
+  customer: two

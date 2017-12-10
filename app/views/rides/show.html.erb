@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @ride.status %>
+</p>
+
+<p>
+  <strong>Pickup time:</strong>
+  <%= @ride.pickup_time %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @ride.driver %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @ride.customer %>
+</p>
+
+<%= link_to 'Edit', edit_ride_path(@ride) %> |
+<%= link_to 'Back', rides_path %>
