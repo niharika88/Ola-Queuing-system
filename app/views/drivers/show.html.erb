@@ -1,9 +1,164 @@
+<style>
+	body {
+   background: #999;  
+   padding: 20px 40px; 
+}
+
+.tabs {
+  position: relative;   
+  min-height: 200px; /* This part sucks */
+  clear: both;
+  margin: 35px 0 25px;
+  background: white;
+}
+.tab {
+  float: left;
+   
+}
+.tab label {
+  background: #eee; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  margin-left: -1px; 
+  position: relative;
+  left: 1px; 
+  top: -29px;
+  -webkit-transition: background-color .17s linear;
+}
+.tab [type=radio] {
+  display: none;   
+}
+.content {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  background: white;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid #ccc; 
+  -webkit-transition: opacity .6s linear;
+  opacity: 0;
+}
+[type=radio]:checked ~ label {
+  background: white;
+  border-bottom: 1px solid white;
+  z-index: 2;
+}
+[type=radio]:checked ~ label ~ .content {
+  z-index: 1;
+  opacity: 1;
+}
+</style>
 <p id="notice"><%= notice %></p>
+<div class="tabs">
+
+    
+   <div class="tab">
+       <input type="radio" id="tab-1" name="tab-group-1" checked>
+       <label for="tab-1">Waiting</label>
+       
+       <div class="content">
+           <table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Pickup time</th>
+      <th>Customer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rides.each do |ride| %>
+    <% if ride.status == "waiting" %>
+      <tr>
+        <td><%= ride.status %></td>
+        <td><%= ride.pickup_time %></td>
+        <td><%= ride.customer.name%></td>
+        <td><%= button_to 'Select Ride', select_ride_path(:ride_id => ride.id, :driver_id => @driver.id), :method => :patch %></td>
+        </tr>
+        <% end %>
+    <% end %>
+  </tbody>
+</table>
+       </div> 
+   </div>
+    
+   <div class="tab">
+       <input type="radio" id="tab-2" name="tab-group-1">
+       <label for="tab-2">Ongoing</label>
+       
+       <div class="content">
+          <table>
+  <thead>
+  
+    <tr>
+      <th>Status</th>
+      <th>Pickup time</th>
+      <th>Customer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rides.each do |ride| %>
+<% if ride.status == "ongoing" && ride.driver_id == @driver.id  %>
+      <tr>
+        <td><%= ride.status %></td>
+        <td><%= ride.pickup_time %></td>
+        <td><%= ride.customer.name%></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+           
+       </div> 
+   </div>
+    
+    <div class="tab">
+       <input type="radio" id="tab-3" name="tab-group-1">
+       <label for="tab-3">Complete</label>
+     
+       <div class="content">
+         <table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Pickup time</th>
+      <th>Customer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rides.each do |ride| %>
+<% if ride.status == "complete" && ride.driver_id == @driver.id  %>
+      <tr>
+        <td><%= ride.status %></td>
+        <td><%= ride.pickup_time %></td>
+        <td><%= ride.customer.name%></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+           
+       </div> 
+   </div>
+    
+</div>
+
+
+
 
 <p>
   <strong>Name:</strong>
-  <%= @driver.name %>
+  <%= @driver.id %>
 </p>
 
-<%= link_to 'Edit', edit_driver_path(@driver) %> |
+
+
+ 
 <%= link_to 'Back', drivers_path %>

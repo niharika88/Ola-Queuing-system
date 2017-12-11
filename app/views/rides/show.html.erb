@@ -5,19 +5,32 @@
   <%= @ride.status %>
 </p>
 
+<% if @ride.pickup_time %>
 <p>
   <strong>Pickup time:</strong>
+   
   <%= @ride.pickup_time %>
 </p>
+<% else %>
+  <p>
+  <strong>Request Time:</strong>
+   
+  <%= @ride.created_at %>
+</p>
+  <% end %>
 
 <p>
   <strong>Driver:</strong>
-  <%= @ride.driver %>
+  <% if @ride.driver_id %>
+  <%= @ride.driver_id %>
+  <% else %>
+  <%= "none" %>
+  <% end %>
 </p>
 
 <p>
   <strong>Customer:</strong>
-  <%= @ride.customer %>
+  <%= @ride.customer.name %>
 </p>
 
 <%= link_to 'Edit', edit_ride_path(@ride) %> |

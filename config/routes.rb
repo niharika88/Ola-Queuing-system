@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+	patch 'select_ride', :to => 'drivers#select_ride'
+
   resources :drivers
   resources :customers
   resources :rides

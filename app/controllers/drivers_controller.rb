@@ -5,11 +5,13 @@ class DriversController < ApplicationController
   # GET /drivers.json
   def index
     @drivers = Driver.all
+    @rides = Ride.all
   end
 
   # GET /drivers/1
   # GET /drivers/1.json
   def show
+    @rides = Ride.all
   end
 
   # GET /drivers/new
@@ -49,6 +51,15 @@ class DriversController < ApplicationController
         format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def select_ride
+    # TODO: ADD ride status validations
+    driver_id = params[:driver_id]
+    Ride.find(params[:ride_id]).update_attributes(:driver_id => driver_id, status: "ongoing", pickup_time: Time.now)
+    @rides = Ride.all
+    @driver = Driver.find(driver_id)
+    redirect_to @driver, notice: "Ride successfully selected."
   end
 
   # DELETE /drivers/1
