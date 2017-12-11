@@ -35,7 +35,7 @@ th, td {
       <tr>
         <td><%= ride.id %></td>
         <td><%= ride.customer.id %></td>
-        <td><%= ((Time.now).sec - (ride.created_at).sec) %></td>
+        <td><%= time_ago_in_words((ride.created_at).localtime) %><%= " ago"%></td>
         <td><%= ride.status %></td>
         <% if ride.driver_id %>
         <td><%= ride.driver_id %></td>

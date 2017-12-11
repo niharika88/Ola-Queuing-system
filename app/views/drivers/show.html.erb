@@ -6,7 +6,7 @@
 
 .tabs {
   position: relative;   
-  min-height: 200px; /* This part sucks */
+  min-height: 600px;
   clear: both;
   margin: 35px 0 25px;
   background: white;
@@ -49,8 +49,25 @@
   z-index: 1;
   opacity: 1;
 }
+
+table, td, th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
 </style>
 <p id="notice"><%= notice %></p>
+<%= button_to "Refresh", driver_path, :method => :get %>
+
+
 <div class="tabs">
 
     
@@ -62,10 +79,9 @@
            <table>
   <thead>
     <tr>
-      <th>Status</th>
-      <th>Pickup time</th>
-      <th>Customer</th>
-      <th colspan="3"></th>
+      <th>RequestID</th>
+      <th>CustomerID</th>
+      <th>Requested</th>
     </tr>
   </thead>
 
@@ -73,9 +89,9 @@
     <% @rides.each do |ride| %>
     <% if ride.status == "waiting" %>
       <tr>
-        <td><%= ride.status %></td>
-        <td><%= ride.pickup_time %></td>
-        <td><%= ride.customer.name%></td>
+        <td><%= ride.id %></td>
+        <td><%= ride.customer.id%></td>
+        <td><%= time_ago_in_words((ride.created_at).localtime) %><%= " ago"%></td>
         <td><%= button_to 'Select Ride', select_ride_path(:ride_id => ride.id, :driver_id => @driver.id), :method => :patch %></td>
         </tr>
         <% end %>
@@ -94,10 +110,10 @@
   <thead>
   
     <tr>
-      <th>Status</th>
-      <th>Pickup time</th>
-      <th>Customer</th>
-      <th colspan="3"></th>
+      <th>RequestID</th>
+      <th>CustomerID</th>
+      <th>Requested</th>
+      <th>PickedUp</th>
     </tr>
   </thead>
 
@@ -105,9 +121,10 @@
     <% @rides.each do |ride| %>
 <% if ride.status == "ongoing" && ride.driver_id == @driver.id  %>
       <tr>
-        <td><%= ride.status %></td>
-        <td><%= ride.pickup_time %></td>
-        <td><%= ride.customer.name%></td>
+        <td><%= ride.id %></td>
+        <td><%= ride.customer.id%></td>
+        <td><%= time_ago_in_words((ride.created_at).localtime) %><%= " ago"%></td>
+        <td><%= time_ago_in_words((ride.pickup_time).localtime) %><%= " ago"%></td>
       </tr>
       <% end %>
     <% end %>
@@ -125,10 +142,11 @@
          <table>
   <thead>
     <tr>
-      <th>Status</th>
-      <th>Pickup time</th>
-      <th>Customer</th>
-      <th colspan="3"></th>
+      <th>RequestID</th>
+      <th>CustomerID</th>
+      <th>Requested</th>
+      <th>PickedUp</th>
+      <th>Completed</th>
     </tr>
   </thead>
 
@@ -136,9 +154,11 @@
     <% @rides.each do |ride| %>
 <% if ride.status == "complete" && ride.driver_id == @driver.id  %>
       <tr>
-        <td><%= ride.status %></td>
-        <td><%= ride.pickup_time %></td>
-        <td><%= ride.customer.name%></td>
+        <td><%= ride.id %></td>
+        <td><%= ride.customer.id%></td>
+        <td><%= time_ago_in_words((ride.created_at).localtime) %><%= " ago"%></td>
+        <td><%= time_ago_in_words((ride.pickup_time).localtime) %><%= " ago"%></td>
+        <td><%= time_ago_in_words((ride.updated_at).localtime) %><%= " ago"%></td>
       </tr>
       <% end %>
     <% end %>

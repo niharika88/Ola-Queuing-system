@@ -57,6 +57,7 @@ class DriversController < ApplicationController
     # TODO: ADD ride status validations
     driver_id = params[:driver_id]
     Ride.find(params[:ride_id]).update_attributes(:driver_id => driver_id, status: "ongoing", pickup_time: Time.now)
+    PygmentsWorker.perform_in(5.minutes,params[:ride_id])
     @rides = Ride.all
     @driver = Driver.find(driver_id)
     redirect_to @driver, notice: "Ride successfully selected."
